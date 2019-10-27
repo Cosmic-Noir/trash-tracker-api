@@ -9,15 +9,15 @@ const jsonParser = express.json();
 // sterilized site:
 const sterilizedSite = site => ({
   id: site.id,
-  postedby: site.postedby,
+  posted_by: site.posted_by,
   date_posted: site.date_posted,
   title: xss(site.title),
   addrss: xss(site.addrss),
   city: xss(site.city),
-  stateAbr: site.stateAbr,
+  state_abr: site.state_abr,
   // Will need to change
-  beforeimg: site.beforeimg,
-  afterImg: site.afterImg,
+  before_img: site.before_img,
+  after_img: site.after_img,
   content: xss(site.content),
   clean: site.clean
 });
@@ -33,21 +33,21 @@ sitesRouter
   })
   .post(jsonParser, (req, res, next) => {
     const {
-      postedby,
+      posted_by,
       title,
       addrss,
       city,
-      stateAbr,
-      beforeimg,
+      state_abr,
+      before_img,
       content
     } = req.body;
     const newSite = {
-      postedby,
+      posted_by,
       title,
       addrss,
       city,
-      stateAbr,
-      beforeimg,
+      state_abr,
+      before_img,
       content
     };
 
