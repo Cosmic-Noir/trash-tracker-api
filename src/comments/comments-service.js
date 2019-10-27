@@ -22,12 +22,11 @@ const CommentsService = {
 };
 
 sterilizedComment = comment => {
-  const { user } = comment;
   return {
     id: comment.id,
     content: xss(comment.content),
     site_id: comment.site_id,
-    user_ref: user.user_name,
+    user_ref: comment.user_ref,
     date_posted: new Date(comment.date_posted)
   };
 };
