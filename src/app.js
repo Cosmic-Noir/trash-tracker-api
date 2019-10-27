@@ -4,8 +4,9 @@ const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 const { NODE_ENV } = require("./config");
-const SitesService = require("./sites/sites-service");
-const CommentsService = require("./comments/comments-service");
+
+// Routes
+const sitesRouter = require("./sites/sites-router");
 
 const app = express();
 
@@ -33,13 +34,6 @@ app.get("/", (req, res) => {
   res.send("Hello, boilerplate!");
 });
 
-app.get("/sites", (req, res, next) => {
-  const knexInstance = req.app.get("db");
-  SitesService.getAllSites(knexInstance)
-    .then(sites => {
-      res.json(sites);
-    })
-    .catch(next);
-});
-
+// Routers
+app.use("/api/sites", sitesRouter);
 module.exports = app;
