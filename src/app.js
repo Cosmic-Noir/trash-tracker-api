@@ -28,12 +28,18 @@ app.use(function errorHandler(error, req, res, next) {
   res.status(500).json(response);
 });
 
+// Endpoints
 app.get("/", (req, res) => {
   res.send("Hello, boilerplate!");
 });
 
-app.get("/sites", (req, res) => {
-  res.send("all sites");
+app.get("/sites", (req, res, next) => {
+  const knexInstance = req.app.get("db");
+  SitesService.getAllSites(knexInstance)
+    .then(sites => {
+      res.json(sites);
+    })
+    .catch(next);
 });
 
 module.exports = app;
