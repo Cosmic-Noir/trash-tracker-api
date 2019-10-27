@@ -117,4 +117,36 @@ sitesRouter
       .catch(next);
   });
 
+// Obtain comments for site:
+sitesRouter
+  .route("/:site_id/comments/")
+  .all(checkSiteExists)
+  .get((req, res, next) => {
+    SitesService.getCommentsForSite(req.app.get("db"), req.params.site_id)
+      .then(comments => {
+        res.json(comments);
+      })
+      .catch(next);
+  });
+
+// Async - check site exists
+async function checkSiteExists(req, res, next) {
+  try {
+    const site = await SitesService.getById(
+      req.app.get("db"),
+      req.params.site_id
+    );
+
+    if (!site)
+      return res.status(404).json({
+        error: { message: `Site doesn't exist` }
+      });
+
+    res.site = site;
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = sitesRouter;

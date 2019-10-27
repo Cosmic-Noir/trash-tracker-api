@@ -18,7 +18,7 @@ const SitesService = {
       .where("id", id)
       .first();
   },
-  getCommentsForSite(db, site_id) {
+  getCommentsForSite(knex, site_id) {
     return knex
       .from("tt_comments")
       .select("*")
