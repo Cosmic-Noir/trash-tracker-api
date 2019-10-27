@@ -1,4 +1,4 @@
-INSERT INTO tt_comments (siteId, userRef, content)
+INSERT INTO tt_comments (site_id, user_ref, content)
 VALUES
 (1, 1, 'Hey I think I will swing by on saturday afternoon around 3 if anyone wants to join, I will be bringing my truck!'),
 (1, 2, 'Hey my friend and I will meet you there on Saturday and bring bags!'),

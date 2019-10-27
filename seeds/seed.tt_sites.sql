@@ -1,4 +1,4 @@
-INSERT INTO tt_sites (postedBy, title, addrss, city, stateAbr, beforeImg, content, afterImg)
+INSERT INTO tt_sites (posted_by, title, addrss, city, state_abr, before_img, content, after_img)
 VALUES
 (1, 'Horse Tooth Trail', 'Horsetooth Trail', 'Fort Collins', 'CO', 'https://www.suffolknewsherald.com/wp-content/uploads/2016/05/useIMG_1460.jpg', 'Was hiking through Horsetooth resevoir the other day when I came across someones secret dumping site. Unbelievable! I didn not have anything on me to clean this at the time, but I thought I would post in case anyone has the time and probably a truck to haul away the refuse', ''),
 (1, 'Golden Rose Park', '6th St & Oak Ave', 'Omaha', 'NE', 'https://bloximages.chicago2.vip.townnews.com/wvnews.com/content/tncms/assets/v3/editorial/c/d7/cd75f812-a8e4-51ec-92dc-c6fc15d36b57/5a6ba163eeb8d.image.jpg?resize=1200%2C900', 'Was jogging in the neighborhood the other day and saw all this trash in the woods near the park. Could not pick it up when I was running, but might go back this weekend and may need help.', ''),
