@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS tt_users;
 DROP TABLE IF EXISTS tt_sites;
 DROP TABLE IF EXISTS tt_comment;
+DROP TABLE IF EXISTS tt_users;
 DROP TABLE IF EXISTS tt_score;
