@@ -18,6 +18,12 @@ const SitesService = {
       .where("id", id)
       .first();
   },
+  getCommentsForSite(db, site_id) {
+    return knex
+      .from("tt_comments")
+      .select("*")
+      .where("site_id", site_id);
+  },
   deleteSite(knex, id) {
     return knex("tt_sites")
       .where({ id })
