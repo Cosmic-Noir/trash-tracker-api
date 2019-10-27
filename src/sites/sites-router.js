@@ -9,14 +9,14 @@ const jsonParser = express.json();
 // sterilized site:
 const sterilizedSite = site => ({
   id: site.id,
-  postedBy: site.postedBy,
+  postedby: site.postedby,
   date_posted: site.date_posted,
   title: xss(site.title),
-  address: xss(site.address),
+  addrss: xss(site.addrss),
   city: xss(site.city),
   stateAbr: site.stateAbr,
   // Will need to change
-  beforeImg: site.beforeImg,
+  beforeimg: site.beforeimg,
   afterImg: site.afterImg,
   content: xss(site.content),
   clean: site.clean
@@ -33,25 +33,25 @@ sitesRouter
   })
   .post(jsonParser, (req, res, next) => {
     const {
-      postedBy,
+      postedby,
       title,
-      address,
+      addrss,
       city,
       stateAbr,
-      beforeImg,
+      beforeimg,
       content
     } = req.body;
     const newSite = {
-      postedBy,
+      postedby,
       title,
-      address,
+      addrss,
       city,
       stateAbr,
-      beforeImg,
+      beforeimg,
       content
     };
 
-    for (const [key, value] of Object.defineProperties(newSite)) {
+    for (const [key, value] of Object.entries(newSite)) {
       if (value == null) {
         return res.status(400).json({
           error: { message: `Missing '${key}' in request body` }
@@ -59,12 +59,14 @@ sitesRouter
       }
     }
 
-    SitesService.insertSite(req.app.get("db"), newSite).then(site => {
-      res
-        .status(201)
-        .location(path.posix.join(req.originalUrl, `/${site.id}`))
-        .json(sterilizedSite(site));
-    });
+    SitesService.insertSite(req.app.get("db"), newSite)
+      .then(site => {
+        res
+          .status(201)
+          .location(path.posix.join(req.originalUrl, `/${site.id}`))
+          .json(sterilizedSite(site));
+      })
+      .catch(next);
   });
 
 module.exports = sitesRouter;
