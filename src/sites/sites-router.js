@@ -73,19 +73,7 @@ sitesRouter
 // By Id
 sitesRouter
   .route("/:site_id")
-  .all((req, res, next) => {
-    SitesService.getById(req.app.get("db"), req.params.site_id)
-      .then(site => {
-        if (!site) {
-          return res.status(404).json({
-            error: { message: `Site doesn't exist` }
-          });
-        }
-        res.site = site;
-        next();
-      })
-      .catch(next);
-  })
+  .all(checkSiteExists)
   .get((req, res, next) => {
     res.json(sterilizedSite(res.site));
   })
