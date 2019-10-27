@@ -18,3 +18,5 @@ const CommentsService = {
       .then(comment => CommentsService.getById(db, comment.id));
   }
 };
+
+module.exports = CommentsService;
