@@ -95,6 +95,26 @@ sitesRouter
         res.status(204).end();
       })
       .catch(next);
+  })
+  .patch(jsonParser, (req, res, next) => {
+    const { title, content, after_img, clean } = req.body;
+    const siteToUpdate = { title, content, after_img, clean };
+
+    const numberOfValues = Object.values(siteToUpdate).filter(Boolean).length;
+
+    if (numberOfValues === 0) {
+      return res.status(400).json({
+        error: {
+          message: `Request body must contain new content and updated Image`
+        }
+      });
+    }
+
+    SitesService.updateSite(req.app.get("db"), req.params.site_id, siteToUpdate)
+      .then(numberRowsAffect => {
+        res.status(204).end();
+      })
+      .catch(next);
   });
 
 module.exports = sitesRouter;
