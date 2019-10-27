@@ -30,4 +30,8 @@ app.get("/", (req, res) => {
   res.send("Hello, boilerplate!");
 });
 
+app.get("/sites", (req, res) => {
+  res.send("all sites");
+});
+
 module.exports = app;
