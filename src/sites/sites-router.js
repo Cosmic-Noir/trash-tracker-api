@@ -22,6 +22,7 @@ const sterilizedSite = site => ({
   clean: site.clean
 });
 
+// All
 sitesRouter
   .route("/")
   .get((req, res, next) => {
@@ -65,6 +66,33 @@ sitesRouter
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${site.id}`))
           .json(sterilizedSite(site));
+      })
+      .catch(next);
+  });
+
+// By Id
+sitesRouter
+  .route("/:site_id")
+  .all((req, res, next) => {
+    SitesService.getById(req.app.get("db"), req.params.site_id)
+      .then(site => {
+        if (!site) {
+          return res.status(404).json({
+            error: { message: `Site doesn't exist` }
+          });
+        }
+        res.site = site;
+        next();
+      })
+      .catch(next);
+  })
+  .get((req, res, next) => {
+    res.json(sterilizedSite(res.site));
+  })
+  .delete((req, res, next) => {
+    SitesService.deleteSite(req.app.get("db"), req.params.site_id)
+      .then(() => {
+        res.status(204).end();
       })
       .catch(next);
   });
