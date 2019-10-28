@@ -7,6 +7,7 @@ const { NODE_ENV } = require("./config");
 
 // Routes
 const sitesRouter = require("./sites/sites-router");
+const commentsRouter = require("./comments/comments-router");
 
 const app = express();
 
@@ -36,4 +37,5 @@ app.get("/", (req, res) => {
 
 // Routers
 app.use("/api/sites", sitesRouter);
+app.use("/api/comments", commentsRouter);
 module.exports = app;

@@ -6,7 +6,7 @@ const CommentsService = {
       knex
         .from("tt_comments")
         .select("*")
-        .where("userRef", id)
+        .where("id", id)
         //Unclear if needed below:
         .first()
     );
@@ -17,7 +17,7 @@ const CommentsService = {
       .into("tt_comments")
       .returning("*")
       .then(([comment]) => comment)
-      .then(comment => CommentsService.getById(db, comment.id));
+      .then(comment => CommentsService.getById(knex, comment.id));
   }
 };
 
