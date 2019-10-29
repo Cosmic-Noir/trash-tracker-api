@@ -44,7 +44,8 @@ usersRouter.post("/", jsonParser, (req, res, next) => {
       return UsersService.insertUser(req.app.get("db"), newUser).then(user => {
         res
           .status(201)
-          .location(path.posix.join(req.originalUrl, `/${user.id}`));
+          .location(path.posix.join(req.originalUrl, `/${user.id}`))
+          .json(UsersService.sterilizedUser(user));
       });
     })
     .catch(next);
