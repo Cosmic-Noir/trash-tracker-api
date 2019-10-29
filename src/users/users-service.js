@@ -4,13 +4,12 @@ const bcrypt = require("bcryptjs");
 const regReq = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
 
 const UsersService = {
-  userNameExist(knex, user_name) {
+  userNameExist(knex, username) {
     return (
-      knex
-        .select("tt_users")
-        .where({ user_name })
+      knex("tt_users")
+        .where({ username })
         .first()
-        // Should return false if user_name already exists
+        // Should return false if username already exists
         .then(user => !!user)
     );
   },
@@ -34,14 +33,16 @@ const UsersService = {
     return null;
   },
   hashPassword(pass) {
-    return bcrypt.has(pass, 12);
+    return bcrypt.hash(pass, 12);
   },
   sterilizedUser(user) {
     return {
       id: user.id,
-      user_name: xss(user.userName),
+      username: xss(user.username),
       email: xss(user.email),
       date_joined: new Date(user.date_joined)
     };
   }
 };
+
+module.exports = UsersService;

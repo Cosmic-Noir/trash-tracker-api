@@ -6,7 +6,7 @@ const usersRouter = express.Router();
 const jsonParser = express.json();
 
 usersRouter.post("/", jsonParser, (req, res, next) => {
-  const { pass, user_name, email } = req.body;
+  const { user_name, pass, email } = req.body;
 
   for (const field of ["pass", "user_name", "email"]) {
     if (!req.body[field]) {
@@ -49,3 +49,5 @@ usersRouter.post("/", jsonParser, (req, res, next) => {
     })
     .catch(next);
 });
+
+module.exports = usersRouter;
