@@ -33,7 +33,7 @@ const UsersService = {
     }
     return null;
   },
-  hasPassword(pass) {
+  hashPassword(pass) {
     return bcrypt.has(pass, 12);
   },
   sterilizedUser(user) {
