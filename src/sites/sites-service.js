@@ -11,6 +11,12 @@ const SitesService = {
         return rows[0];
       });
   },
+  getCleanSites(knex) {
+    return knex
+      .from("tt_sites")
+      .select("*")
+      .where("clean", true);
+  },
   getById(knex, id) {
     return knex
       .from("tt_sites")
