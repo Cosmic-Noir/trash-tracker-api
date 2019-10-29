@@ -2,6 +2,12 @@ const SitesService = {
   getAllSites(knex) {
     return knex.select("*").from("tt_sites");
   },
+  getTrashSites(knex) {
+    return knex
+      .select("*")
+      .from("tt_sites")
+      .where("clean", false);
+  },
   insertSite(knex, newSite) {
     return knex
       .insert(newSite)
@@ -13,8 +19,8 @@ const SitesService = {
   },
   getCleanSites(knex) {
     return knex
-      .from("tt_sites")
       .select("*")
+      .from("tt_sites")
       .where("clean", true);
   },
   getById(knex, id) {

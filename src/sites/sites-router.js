@@ -22,6 +22,24 @@ const sterilizedSite = site => ({
   clean: site.clean
 });
 
+// Obtain only clean sites from db:
+sitesRouter.route("/clean").get((req, res, next) => {
+  SitesService.getCleanSites(req.app.get("db"))
+    .then(sites => {
+      res.json(sites);
+    })
+    .catch(next);
+});
+
+//Obtain only trashed sites from db:
+sitesRouter.route("/trash").get((req, res, next) => {
+  SitesService.getTrashSites(req.app.get("db"))
+    .then(sites => {
+      res.json(sites);
+    })
+    .catch(next);
+});
+
 // All
 sitesRouter
   .route("/")
