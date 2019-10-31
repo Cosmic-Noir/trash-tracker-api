@@ -26,3 +26,5 @@ const AuthService = {
     return Buffer.from(token, "base64");
   }
 };
+
+module.exports = AuthService;
