@@ -103,8 +103,8 @@ sitesRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const { title, content, after_img, clean } = req.body;
-    const siteToUpdate = { title, content, after_img, clean };
+    const { content, after_img, clean } = req.body;
+    const siteToUpdate = { content, after_img, clean };
 
     const numberOfValues = Object.values(siteToUpdate).filter(Boolean).length;
 
