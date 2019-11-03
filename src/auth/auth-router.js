@@ -31,7 +31,7 @@ authRouter.post("/", jsonParser, (req, res, next) => {
             });
           }
           // Send jwt if all passes
-          const sub = dbUsert.username;
+          const sub = dbUser.username;
           const payload = { user_id: dbUser.id };
           res.send({
             authToken: AuthService.createJwt(sub, payload)
