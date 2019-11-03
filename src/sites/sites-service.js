@@ -33,6 +33,7 @@ const SitesService = {
   getCommentsForSite(knex, site_id) {
     return knex
       .from("tt_comments")
+      .innerJoin("tt_users", "tt_comments.user_ref", "=", "tt_users.id")
       .select("*")
       .where("site_id", site_id);
   },
