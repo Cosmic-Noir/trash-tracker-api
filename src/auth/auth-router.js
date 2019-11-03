@@ -1,7 +1,7 @@
 const express = require("express");
 const jsonParser = express.json();
-
 const authRouter = express.Router();
+const AuthService = require("./auth-service");
 
 authRouter.post("/", jsonParser, (req, res, next) => {
   const { username, pass } = req.body;
@@ -14,8 +14,15 @@ authRouter.post("/", jsonParser, (req, res, next) => {
       });
     }
   }
-
-  res.send("ok");
+  AuthService.getUser(req.app.get("db"), loginUser.username)
+    .then(dbUser => {
+      if (!dbUser)
+        return res.status(400).json({
+          error: "Incorrect username or password"
+        });
+      res.send("ok");
+    })
+    .catch(next);
 });
 
 module.exports = authRouter;
