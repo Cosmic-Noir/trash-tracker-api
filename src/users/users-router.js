@@ -51,4 +51,12 @@ usersRouter.post("/", jsonParser, (req, res, next) => {
     .catch(next);
 });
 
+usersRouter.route("/:user_id").delete((req, res, next) => {
+  UsersService.deleteUser(req.app.get("db"), req.params.user_id)
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch(next);
+});
+
 module.exports = usersRouter;

@@ -20,6 +20,11 @@ const UsersService = {
       .returning("*")
       .then(([user]) => user);
   },
+  deleteUser(knex) {
+    return knex("tt_users")
+      .where({ id })
+      .delete();
+  },
   validatePassword(pass) {
     if (pass.length < 8) {
       return `Password must be at least 8 characters`;
