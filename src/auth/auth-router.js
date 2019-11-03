@@ -2,7 +2,7 @@ const express = require("express");
 
 const authRouter = express.Router();
 
-authRouter.post("/login", (req, res, next) => {
+authRouter.post("/", (req, res, next) => {
   res.send("ok");
 });
 
