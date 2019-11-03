@@ -20,7 +20,7 @@ const UsersService = {
       .returning("*")
       .then(([user]) => user);
   },
-  deleteUser(knex) {
+  deleteUser(knex, id) {
     return knex("tt_users")
       .where({ id })
       .delete();
