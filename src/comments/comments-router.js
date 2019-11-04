@@ -1,11 +1,12 @@
 const express = require("express");
 const path = require("path");
 const CommentsService = require("./comments-service");
+const { requireAuth } = require("../auth/basic-auth");
 
 commentsRouter = express.Router();
 const jsonParser = express.json();
 
-commentsRouter.route("/").post(jsonParser, (req, res, next) => {
+commentsRouter.route("/").post(requireAuth, jsonParser, (req, res, next) => {
   // Will need to change, obtain user_ref from auth token
   const { site_id, content, user_ref } = req.body;
   const newComment = { site_id, content, user_ref };
