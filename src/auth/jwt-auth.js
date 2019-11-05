@@ -19,7 +19,10 @@ function requireAuth(req, res, next) {
         if (!user) {
           return res.status(401).json({ error: "Unauthorized request" });
         }
-        req.user_ref = user;
+        req.user_ref = user.id;
+        console.log(user);
+        console.log(req.user_ref);
+
         next();
       })
       .catch(err => {

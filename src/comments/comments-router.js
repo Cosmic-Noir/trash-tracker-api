@@ -8,8 +8,11 @@ const jsonParser = express.json();
 
 commentsRouter.route("/").post(requireAuth, jsonParser, (req, res, next) => {
   // Will need to change, obtain user_ref from auth token
-  const { site_id, content, user_ref } = req.body;
-  const newComment = { site_id, content, user_ref };
+  const { site_id, content } = req.body;
+  const newComment = { site_id, content };
+
+  newComment.user_ref = req.user_ref;
+  console.log(newComment);
 
   for (const [key, value] of Object.entries(newComment)) {
     if (value == null) {
