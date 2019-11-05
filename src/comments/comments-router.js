@@ -7,7 +7,6 @@ commentsRouter = express.Router();
 const jsonParser = express.json();
 
 commentsRouter.route("/").post(requireAuth, jsonParser, (req, res, next) => {
-  // Will need to change, obtain user_ref from auth token
   const { site_id, content } = req.body;
   const newComment = { site_id, content };
 
