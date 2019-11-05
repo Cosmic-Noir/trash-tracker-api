@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const CommentsService = require("./comments-service");
-const { requireAuth } = require("../auth/basic-auth");
+const { requireAuth } = require("../auth/jwt-auth");
 
 commentsRouter = express.Router();
 const jsonParser = express.json();
