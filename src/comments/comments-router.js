@@ -3,7 +3,7 @@ const path = require("path");
 const CommentsService = require("./comments-service");
 const { requireAuth } = require("../auth/jwt-auth");
 
-commentsRouter = express.Router();
+const commentsRouter = express.Router();
 const jsonParser = express.json();
 
 commentsRouter.route("/").post(requireAuth, jsonParser, (req, res, next) => {

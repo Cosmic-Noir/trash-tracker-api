@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const xss = require("xss");
 const SitesService = require("./sites-service");
+const { requireAuth } = require("../auth/jwt-auth");
 
 const sitesRouter = express.Router();
 const jsonParser = express.json();
@@ -50,18 +51,9 @@ sitesRouter
       })
       .catch(next);
   })
-  .post(jsonParser, (req, res, next) => {
-    const {
-      posted_by,
-      title,
-      addrss,
-      city,
-      state_abr,
-      before_img,
-      content
-    } = req.body;
+  .post(requireAuth, jsonParser, (req, res, next) => {
+    const { title, addrss, city, state_abr, before_img, content } = req.body;
     const newSite = {
-      posted_by,
       title,
       addrss,
       city,
@@ -69,6 +61,8 @@ sitesRouter
       before_img,
       content
     };
+
+    newSite.posted_by = req.user_ref;
 
     for (const [key, value] of Object.entries(newSite)) {
       if (value == null) {
