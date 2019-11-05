@@ -3,9 +3,11 @@ const xss = require("xss");
 const CommentsService = {
   getById(knex, id) {
     return knex
+      .select("*")
+
       .from("tt_comments")
       .innerJoin("tt_comments", "tt_users.id", "=", "tt_comments.user_ref")
-      .select("*")
+      .select("username, score")
       .where("tt_comments.id", id);
   },
   insertComment(knex, newComment) {
