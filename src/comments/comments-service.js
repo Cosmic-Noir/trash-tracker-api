@@ -3,7 +3,7 @@ const xss = require("xss");
 const CommentsService = {
   getById(knex, id) {
     return knex
-      .select("tt_comments.content, tt_users.id, tt_users.username")
+      .select("*")
       .from("tt_comments")
       .where("tt_comments.id", id);
   },
