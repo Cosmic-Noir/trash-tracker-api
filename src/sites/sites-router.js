@@ -4,6 +4,9 @@ const xss = require("xss");
 const SitesService = require("./sites-service");
 const { requireAuth } = require("../auth/jwt-auth");
 
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+
 const sitesRouter = express.Router();
 const jsonParser = express.json();
 
@@ -51,36 +54,41 @@ sitesRouter
       })
       .catch(next);
   })
-  .post(requireAuth, jsonParser, (req, res, next) => {
-    const { title, addrss, city, state_abr, before_img, content } = req.body;
-    const newSite = {
-      title,
-      addrss,
-      city,
-      state_abr,
-      before_img,
-      content
-    };
+  .post(
+    requireAuth,
+    jsonParser,
+    upload.single("before_img"),
+    (req, res, next) => {
+      console.log(req.file);
+      const { title, addrss, city, state_abr, content } = req.body;
+      const newSite = {
+        title,
+        addrss,
+        city,
+        state_abr,
+        content
+      };
 
-    newSite.posted_by = req.user_ref;
+      newSite.posted_by = req.user_ref;
 
-    for (const [key, value] of Object.entries(newSite)) {
-      if (value == null) {
-        return res.status(400).json({
-          error: { message: `Missing '${key}' in request body` }
-        });
+      for (const [key, value] of Object.entries(newSite)) {
+        if (value == null) {
+          return res.status(400).json({
+            error: { message: `Missing '${key}' in request body` }
+          });
+        }
       }
-    }
 
-    SitesService.insertSite(req.app.get("db"), newSite)
-      .then(site => {
-        res
-          .status(201)
-          .location(path.posix.join(req.originalUrl, `/${site.id}`))
-          .json(sterilizedSite(site));
-      })
-      .catch(next);
-  });
+      SitesService.insertSite(req.app.get("db"), newSite)
+        .then(site => {
+          res
+            .status(201)
+            .location(path.posix.join(req.originalUrl, `/${site.id}`))
+            .json(sterilizedSite(site));
+        })
+        .catch(next);
+    }
+  );
 
 // By Id
 sitesRouter
