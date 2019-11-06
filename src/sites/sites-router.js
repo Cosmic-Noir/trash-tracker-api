@@ -13,11 +13,21 @@ const storage = multer.diskStorage({
     cb(null, new Date().toISOString() + file.originalname);
   }
 });
+
+const fileFilter = (req, file, cb) => {
+  // filter for img file types
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 const upload = multer({
   storage: storage,
   limits: {
     fileSize: 1024 * 1024 * 5
-  }
+  },
+  fileFilter: fileFilter
 });
 
 const sitesRouter = express.Router();
