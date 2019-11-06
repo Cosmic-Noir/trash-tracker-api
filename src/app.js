@@ -19,6 +19,7 @@ const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
+app.use(epxress.static("uploads"));
 
 // Return 500 for internal server errors
 app.use(function errorHandler(error, req, res, next) {

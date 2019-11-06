@@ -92,6 +92,8 @@ sitesRouter
         content
       };
 
+      newSite.before_img = req.file.path;
+
       newSite.posted_by = req.user_ref;
 
       for (const [key, value] of Object.entries(newSite)) {
