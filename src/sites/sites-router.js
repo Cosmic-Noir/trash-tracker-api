@@ -4,7 +4,7 @@ const xss = require("xss");
 const SitesService = require("./sites-service");
 const { requireAuth } = require("../auth/jwt-auth");
 
-// Image uploading
+const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, "./uploads");
@@ -13,7 +13,6 @@ const storage = multer.diskStorage({
     cb(null, new Date().toISOString() + file.originalname);
   }
 });
-const multer = require("multer");
 const upload = multer({ storage: storage });
 
 const sitesRouter = express.Router();
