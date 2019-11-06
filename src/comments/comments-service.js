@@ -15,6 +15,11 @@ const CommentsService = {
       .then(([comment]) => comment)
       .then(comment => CommentsService.getById(knex, comment.id));
   },
+  deleteComment(knex, id) {
+    return knex("tt_comments")
+      .where({ id })
+      .delete();
+  },
   sterilizedComment(comment) {
     return {
       id: comment.id,
