@@ -31,4 +31,12 @@ commentsRouter.route("/").post(requireAuth, jsonParser, (req, res, next) => {
     .catch(next);
 });
 
+commentsRouter.route("/:comment_id").delete((req, res, next) => {
+  CommentsService.deleteComment(req.app.get("db"), req.params.comment_id)
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch(next);
+});
+
 module.exports = commentsRouter;
