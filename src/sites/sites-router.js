@@ -13,7 +13,12 @@ const storage = multer.diskStorage({
     cb(null, new Date().toISOString() + file.originalname);
   }
 });
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  }
+});
 
 const sitesRouter = express.Router();
 const jsonParser = express.json();
