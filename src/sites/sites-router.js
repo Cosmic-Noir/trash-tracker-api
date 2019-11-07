@@ -130,9 +130,11 @@ sitesRouter
       })
       .catch(next);
   })
-  .patch(jsonParser, (req, res, next) => {
-    const { content, after_img, clean } = req.body;
-    const siteToUpdate = { content, after_img, clean };
+  .patch(jsonParser, upload.single("after_img"), (req, res, next) => {
+    const { content, clean } = req.body;
+    const siteToUpdate = { content, clean };
+
+    siteToUpdate.after_img = req.file.path;
 
     const numberOfValues = Object.values(siteToUpdate).filter(Boolean).length;
 
