@@ -73,6 +73,7 @@ sitesRouter
   .get((req, res, next) => {
     SitesService.getAllSites(req.app.get("db"))
       .then(sites => {
+        res.sendFile("./uploads");
         res.json(sites);
       })
       .catch(next);
@@ -83,35 +84,36 @@ sitesRouter
     upload.single("before_img"),
     (req, res, next) => {
       console.log(req.file);
-      const { title, addrss, city, state_abr, content } = req.body;
-      const newSite = {
-        title,
-        addrss,
-        city,
-        state_abr,
-        content
-      };
+      // // const { title, addrss, city, state_abr, content } = req.body;
+      // // const newSite = {
+      // //   title,
+      // //   addrss,
+      // //   city,
+      // //   state_abr,
+      // //   content
+      // // };
 
-      newSite.before_img = req.file.path;
+      // // newSite.before_img = req.file.path;
 
-      newSite.posted_by = req.user_ref;
+      // // newSite.posted_by = req.user_ref;
 
-      for (const [key, value] of Object.entries(newSite)) {
-        if (value == null) {
-          return res.status(400).json({
-            error: { message: `Missing '${key}' in request body` }
-          });
-        }
-      }
+      // // for (const [key, value] of Object.entries(newSite)) {
+      // //   if (value == null) {
+      // //     return res.status(400).json({
+      // //       error: { message: `Missing '${key}' in request body` }
+      // //     });
+      // //   }
+      // // }
 
-      SitesService.insertSite(req.app.get("db"), newSite)
-        .then(site => {
-          res
-            .status(201)
-            .location(path.posix.join(req.originalUrl, `/${site.id}`))
-            .json(sterilizedSite(site));
-        })
-        .catch(next);
+      // res.status(200).send({ Hey: "hi" });
+      // // SitesService.insertSite(req.app.get("db"), newSite)
+      // //   .then(site => {
+      // //     res
+      // //       .status(201)
+      // //       .location(path.posix.join(req.originalUrl, `/${site.id}`))
+      // //       .json(sterilizedSite(site));
+      // //   })
+      // //   .catch(next);
     }
   );
 
