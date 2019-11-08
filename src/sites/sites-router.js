@@ -9,7 +9,6 @@ const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
   cloud_name: "trash-tracker",
-  // Should set to env variables
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
@@ -118,7 +117,6 @@ sitesRouter
       }
 
       insertSite = () => {
-        console.log(newSite);
         SitesService.insertSite(req.app.get("db"), newSite)
           .then(site => {
             res
@@ -154,7 +152,10 @@ sitesRouter
     const { content, clean } = req.body;
     const siteToUpdate = { content, clean };
 
-    siteToUpdate.after_img = req.file.path;
+    cloudinary.uploader.upload(req.file.path, function(error, result) {
+      siteToUpdate.after_img = result.secure_url;
+      updateSite();
+    });
 
     const numberOfValues = Object.values(siteToUpdate).filter(Boolean).length;
 
@@ -166,11 +167,17 @@ sitesRouter
       });
     }
 
-    SitesService.updateSite(req.app.get("db"), req.params.site_id, siteToUpdate)
-      .then(numberRowsAffect => {
-        res.status(204).end();
-      })
-      .catch(next);
+    updateSite = () => {
+      SitesService.updateSite(
+        req.app.get("db"),
+        req.params.site_id,
+        siteToUpdate
+      )
+        .then(numberRowsAffect => {
+          res.status(204).end();
+        })
+        .catch(next);
+    };
   });
 
 // Obtain comments for site:
