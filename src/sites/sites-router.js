@@ -4,31 +4,31 @@ const xss = require("xss");
 const SitesService = require("./sites-service");
 const { requireAuth } = require("../auth/jwt-auth");
 
-const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, "./uploads");
-  },
-  filename: function(req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname);
-  }
-});
+// const multer = require("multer");
+// const storage = multer.diskStorage({
+//   destination: function(req, file, cb) {
+//     cb(null, "./uploads");
+//   },
+//   filename: function(req, file, cb) {
+//     cb(null, new Date().toISOString() + file.originalname);
+//   }
+// });
 
-const fileFilter = (req, file, cb) => {
-  // filter for img file types
-  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5
-  },
-  fileFilter: fileFilter
-});
+// const fileFilter = (req, file, cb) => {
+//   // filter for img file types
+//   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+//     cb(null, true);
+//   } else {
+//     cb(null, false);
+//   }
+// };
+// const upload = multer({
+//   storage: storage,
+//   limits: {
+//     fileSize: 1024 * 1024 * 5
+//   },
+//   fileFilter: fileFilter
+// });
 
 const sitesRouter = express.Router();
 const jsonParser = express.json();
@@ -78,43 +78,36 @@ sitesRouter
       })
       .catch(next);
   })
-  .post(
-    requireAuth,
-    jsonParser,
-    upload.single("before_img"),
-    (req, res, next) => {
-      console.log(req.file);
-      const { title, addrss, city, state_abr, content } = req.body;
-      const newSite = {
-        title,
-        addrss,
-        city,
-        state_abr,
-        content
-      };
+  .post(requireAuth, jsonParser, (req, res, next) => {
+    console.log(req.file);
+    const { title, addrss, city, state_abr, content } = req.body;
+    const newSite = {
+      title,
+      addrss,
+      city,
+      state_abr,
+      content
+    };
 
-      newSite.before_img = req.file.path;
+    newSite.posted_by = req.user_ref;
 
-      newSite.posted_by = req.user_ref;
-
-      for (const [key, value] of Object.entries(newSite)) {
-        if (value == null) {
-          return res.status(400).json({
-            error: { message: `Missing '${key}' in request body` }
-          });
-        }
+    for (const [key, value] of Object.entries(newSite)) {
+      if (value == null) {
+        return res.status(400).json({
+          error: { message: `Missing '${key}' in request body` }
+        });
       }
-
-      SitesService.insertSite(req.app.get("db"), newSite)
-        .then(site => {
-          res
-            .status(201)
-            .location(path.posix.join(req.originalUrl, `/${site.id}`))
-            .json(sterilizedSite(site));
-        })
-        .catch(next);
     }
-  );
+
+    SitesService.insertSite(req.app.get("db"), newSite)
+      .then(site => {
+        res
+          .status(201)
+          .location(path.posix.join(req.originalUrl, `/${site.id}`))
+          .json(sterilizedSite(site));
+      })
+      .catch(next);
+  });
 
 // By Id
 sitesRouter
@@ -130,11 +123,9 @@ sitesRouter
       })
       .catch(next);
   })
-  .patch(jsonParser, upload.single("after_img"), (req, res, next) => {
+  .patch(jsonParser, (req, res, next) => {
     const { content, clean } = req.body;
     const siteToUpdate = { content, clean };
-
-    siteToUpdate.after_img = req.file.path;
 
     const numberOfValues = Object.values(siteToUpdate).filter(Boolean).length;
 

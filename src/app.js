@@ -42,6 +42,6 @@ app.use("/api/sites", sitesRouter);
 app.use("/api/comments", commentsRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/login", authRouter);
-app.use("/api/uploads", express.static("uploads"));
+app.use("/uploads", express.static("uploads"));
 
 module.exports = app;
