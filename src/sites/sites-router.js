@@ -79,7 +79,6 @@ sitesRouter
   .get((req, res, next) => {
     SitesService.getAllSites(req.app.get("db"))
       .then(sites => {
-        res.sendFile("./uploads");
         res.json(sites);
       })
       .catch(next);
