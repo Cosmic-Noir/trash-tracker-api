@@ -11,6 +11,7 @@ before("Make knex instance", () => {
     client: "pg",
     connection: process.env.TEST_DB_URL
   });
+  app.set("db", db);
 });
 
 // Disconnect and clear the table for testing
