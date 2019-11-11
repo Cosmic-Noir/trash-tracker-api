@@ -28,7 +28,17 @@ describe("GET /api/trash", function() {
   context(`Given there are no sites`, () => {
     it("Responds with 200 status and empty list", () => {
       return supertest(app)
-        .get("/api/sites")
+        .get("/api/sites/trash")
+        .expect(200, []);
+    });
+  });
+});
+
+describe("GET /api/clean", function() {
+  context(`Given there are no sites`, () => {
+    it("Responds with 200 status and empty list", () => {
+      return supertest(app)
+        .get("/api/sites/clean")
         .expect(200, []);
     });
   });
