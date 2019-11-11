@@ -1,4 +1,4 @@
-function makeSitesArray() {
+function makeTrashSitesArray() {
   return [
     {
       id: 1,
@@ -51,7 +51,12 @@ function makeSitesArray() {
       after_img: "",
       content:
         "So sad to see this beech absolutely trashed by parties and picknickers. Would be wonderful to bring my kids here again if we cleaned it up, but I could really use some help, along with a truck to haul away the refuse."
-    },
+    }
+  ];
+}
+
+function makeCleanSitesArray() {
+  return [
     {
       id: 5,
       clean: "true",
@@ -87,4 +92,4 @@ function makeUsersArray() {
   ];
 }
 
-module.exports = { makeSitesArray, makeUsersArray };
+module.exports = { makeTrashSitesArray, makeCleanSitesArray, makeUsersArray };

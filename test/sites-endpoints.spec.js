@@ -1,6 +1,7 @@
 const { expect } = require("chai");
 const knex = require("knex");
 const app = require("../src/app");
+const { makeSitesArray, makeUsersArray } = require('./sites.fixtures');
 
 let db;
 
@@ -32,6 +33,10 @@ describe("GET /api/trash", function() {
         .expect(200, []);
     });
   });
+
+  context(`Given there are sites`, () => {
+      const 
+  })
 });
 
 describe("GET /api/clean", function() {
