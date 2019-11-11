@@ -49,7 +49,6 @@ const sterilizedSite = site => ({
   addrss: xss(site.addrss),
   city: xss(site.city),
   state_abr: site.state_abr,
-  // Will need to change
   before_img: site.before_img,
   after_img: site.after_img,
   content: xss(site.content),

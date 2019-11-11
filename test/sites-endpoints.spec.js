@@ -2,4 +2,33 @@ const { expect } = require("chai");
 const knex = require("knex");
 const app = require("../src/app");
 
-describe("Sites Endpoints", function() {});
+let db;
+
+// Create connection to test DB:
+
+before("Make knex instance", () => {
+  db = knex({
+    client: "pg",
+    connection: process.env.TEST_DB_URL
+  });
+});
+
+// Disconnect and clear the table for testing
+after("Disconnect from db", () => db.destroy());
+before("Clear the table", () =>
+  db.raw("TRUNCATE tt_sites, tt_users RESTART IDENTITY CASCADE")
+);
+afterEach("Cleanup", () =>
+  db.raw("TRUNCATE tt_sites, tt_users RESTART IDENTITY CASCADE")
+);
+
+// GET endpoints
+describe("GET /api/trash", function() {
+  context(`Given there are no sites`, () => {
+    it("Responds with 200 status and empty list", () => {
+      return supertest(app)
+        .get("/api/trash")
+        .expect(200, []);
+    });
+  });
+});
