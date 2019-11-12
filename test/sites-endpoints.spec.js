@@ -106,4 +106,30 @@ describe(`GET /api/sites/:site_id`, () => {
         .expect(404, { error: { message: `Site doesn't exist` } });
     });
   });
+
+  context(`Given the site does exist`, () => {
+    const testUsers = makeUsersArray();
+    const testTrashSites = makeTrashSitesArray();
+    const testCleanSites = makeCleanSitesArray();
+
+    beforeEach("Insert users and sites", () => {
+      return db
+        .into("tt_users")
+        .insert(testUsers)
+        .then(() => {
+          return db.into("tt_sites").insert(testTrashSites);
+        })
+        .then(() => {
+          return db.into("tt_sites").insert(testCleanSites);
+        });
+    });
+
+    it(`Responds with 200 and returns the specified site`, () => {
+      const siteId = 2;
+      const expectedSite = testTrashSites[siteId - 1];
+      return supertest(app)
+        .get(`/api/sites/${siteId}`)
+        .expect(200, expectedSite);
+    });
+  });
 });
