@@ -1,7 +1,11 @@
 const { expect } = require("chai");
 const knex = require("knex");
 const app = require("../src/app");
-const { makeSitesArray, makeUsersArray } = require('./sites.fixtures');
+const {
+  makeTrashSitesArray,
+  makeCleanSitesArray,
+  makeUsersArray
+} = require("./sites.fixtures");
 
 let db;
 
@@ -26,7 +30,7 @@ afterEach("Cleanup", () =>
 
 // GET endpoints
 describe("GET /api/trash", function() {
-  context(`Given there are no sites`, () => {
+  context(`Given there are no trash sites`, () => {
     it("Responds with 200 status and empty list", () => {
       return supertest(app)
         .get("/api/sites/trash")
@@ -34,13 +38,33 @@ describe("GET /api/trash", function() {
     });
   });
 
-  context(`Given there are sites`, () => {
-      const 
-  })
+  context(`Given there are trash sites`, () => {
+    const testUsers = makeUsersArray();
+    const testTrashSites = makeTrashSitesArray();
+    const testCleanSites = makeCleanSitesArray();
+
+    beforeEach("Insert users and sites", () => {
+      return db
+        .into("tt_users")
+        .insert(testUsers)
+        .then(() => {
+          return db.into("tt_sites").insert(testTrashSites);
+        })
+        .then(() => {
+          return db.into("tt_sites").insert(testCleanSites);
+        });
+    });
+
+    it(`GET /api/sites/trash responds with 200 and trash sites`, () => {
+      return supertest(app)
+        .get("/api/sites/trash")
+        .expect(200, testTrashSites);
+    });
+  });
 });
 
 describe("GET /api/clean", function() {
-  context(`Given there are no sites`, () => {
+  context(`Given there are no clean sites`, () => {
     it("Responds with 200 status and empty list", () => {
       return supertest(app)
         .get("/api/sites/clean")

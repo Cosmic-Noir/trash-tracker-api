@@ -2,7 +2,9 @@ function makeTrashSitesArray() {
   return [
     {
       id: 1,
-      clean: "false",
+      posted_by: 1,
+      date_posted: new Date().toISOString(),
+      clean: false,
       title: "Horsetooh Trail",
       addrss: "Horsetooth Resevoir",
       city: "Fort Collins",
@@ -15,7 +17,9 @@ function makeTrashSitesArray() {
     },
     {
       id: 2,
-      clean: "false",
+      posted_by: 2,
+      date_posted: new Date().toISOString(),
+      clean: false,
       title: "Park Trail",
       addrss: "6th & Oak Ave",
       city: "Omaha",
@@ -28,7 +32,9 @@ function makeTrashSitesArray() {
     },
     {
       id: 3,
-      clean: "false",
+      posted_by: 1,
+      date_posted: new Date().toISOString(),
+      clean: false,
       title: "Ditch Off Highway 25",
       addrss: "Highway 25, Windsor Exit",
       city: "Loveland",
@@ -41,7 +47,9 @@ function makeTrashSitesArray() {
     },
     {
       id: 4,
-      clean: "false",
+      posted_by: 2,
+      date_posted: new Date().toISOString(),
+      clean: false,
       title: "Leech Lake",
       addrss: "Leech Lake",
       city: "Pequot",
@@ -59,7 +67,9 @@ function makeCleanSitesArray() {
   return [
     {
       id: 5,
-      clean: "true",
+      posted_by: 1,
+      date_posted: new Date().toISOString(),
+      clean: true,
       title: "Lum Beech - Cleaned!",
       addrss: "413 Lum Beech Rd",
       city: "Bloomington",
@@ -80,14 +90,14 @@ function makeUsersArray() {
       id: 1,
       username: "dude",
       email: "cool@email.com",
-      password: "cool123",
+      pass: "cool123",
       score: 25
     },
     {
       id: 2,
       username: "dudette",
       email: "cooler@email.com",
-      password: "cold789"
+      pass: "cold789"
     }
   ];
 }
