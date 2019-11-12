@@ -71,4 +71,28 @@ describe("GET /api/clean", function() {
         .expect(200, []);
     });
   });
+
+  context(`Given there are clean sites`, () => {
+    const testUsers = makeUsersArray();
+    const testTrashSites = makeTrashSitesArray();
+    const testCleanSites = makeCleanSitesArray();
+
+    beforeEach("Insert users and sites", () => {
+      return db
+        .into("tt_users")
+        .insert(testUsers)
+        .then(() => {
+          return db.into("tt_sites").insert(testTrashSites);
+        })
+        .then(() => {
+          return db.into("tt_sites").insert(testCleanSites);
+        });
+    });
+
+    it(`GET /api/sites/clean responds with 200 and clean sites`, () => {
+      return supertest(app)
+        .get("/api/sites/clean")
+        .expect(200, testCleanSites);
+    });
+  });
 });
