@@ -133,3 +133,52 @@ describe(`GET /api/sites/:site_id`, () => {
     });
   });
 });
+
+describe(`POST /api/sites`, () => {
+  it(`Creates site, responds with 201 and new site`, function() {
+    this.retries(3);
+    const testUsers = makeUsersArray();
+
+    beforeEach("cleanup", () => {
+      db.raw("TRUNCATE tt_sites, tt_users RESTART IDENTITY CASCADE");
+    });
+    beforeEach("Insert test users", () => {
+      return db.into("tt_users").insert(testUsers);
+    });
+
+    const newSite = {
+      posted_by: 2,
+      title: "Leech Lake",
+      addrss: "Leech Lake Park",
+      city: "Pequot",
+      state_abr: "MN",
+      before_img:
+        "https://www.pasadenastarnews.com/wp-content/uploads/2019/06/LDN-L-HOMELESS-COUNT-SGVN-0605-12-SR2.jpg?w=525",
+      content: "One, two, testing..."
+    };
+
+    return supertest(app)
+      .post(`/api/sites`)
+      .send(newSite)
+      .expect(201)
+      .expect(res => {
+        expect(res.body.title).to.eql(newSite.title);
+        expect(res.body.posted_by).to.eql(newSite.posted_by);
+        expect(res.body.addrss).to.eql(newSite.addrss);
+        expect(res.body.city).to.eql(newSite.city);
+        expect(res.body.state_abr).to.eql(newSite.state_abr);
+        expect(res.body.before_img).to.eql(newSite.before_img);
+        expect(res.body.content).to.eql(newSite.content);
+        expect(res.body).to.have.property("id");
+        expect(res.headers.location).to.eql(`/api/sites/${res.body.id}`);
+        const expected = new Date().toLocaleString();
+        const actual = new Date(res.body.date_posted).toLocaleString();
+        expect(actual).to.eql(expected);
+      })
+      .then(res => {
+        supertest(app)
+          .get(`/api/sites/${res.body.id}`)
+          .expect(res.body);
+      });
+  });
+});
