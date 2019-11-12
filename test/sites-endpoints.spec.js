@@ -3,9 +3,9 @@ const knex = require("knex");
 const app = require("../src/app");
 const {
   makeTrashSitesArray,
-  makeCleanSitesArray,
-  makeUsersArray
+  makeCleanSitesArray
 } = require("./sites.fixtures");
+const { makeUsersArray } = require("./users.fixtures");
 
 let db;
 
@@ -136,7 +136,7 @@ describe(`GET /api/sites/:site_id`, () => {
 
 describe(`POST /api/sites`, () => {
   it(`Creates site, responds with 201 and new site`, function() {
-    this.retries(3);
+    // this.retries(3);
     const testUsers = makeUsersArray();
 
     beforeEach("cleanup", () => {
