@@ -96,3 +96,14 @@ describe("GET /api/clean", function() {
     });
   });
 });
+
+describe(`GET /api/sites/:site_id`, () => {
+  context(`Given site does not exist`, () => {
+    it(`Responds with 404`, () => {
+      const invalidId = 123454;
+      return supertest(app)
+        .get(`/api/sites/${invalidId}`)
+        .expect(404, { error: { message: `Site doesn't exist` } });
+    });
+  });
+});
