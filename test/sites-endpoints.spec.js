@@ -214,11 +214,40 @@ describe(`POST /api/sites`, () => {
   });
 });
 
-describe(`PATCH /api/sites/:site_id`, () => {
+describe.skip(`PATCH /api/sites/:site_id`, () => {
   context(`Given there are no matching sites`, () => {
     const siteId = 12345;
     return supertest(app)
       .patch(`/api/sites/${siteId}`)
       .expect(404, { error: { message: `Site doesn't exist` } });
+  });
+
+  context(`Given there is a matching site`, () => {
+    const testUsers = makeUsersArray();
+    const testSites = makeTrashSitesArray();
+
+    beforeEach("Insert users and sites", () => {
+      return db
+        .into("tt_users")
+        .insert(testUsers)
+        .then(() => {
+          return db.into("tt_sites").insert(testSites);
+        });
+    });
+
+    it(`Responds with 204 and updates the site to clean`, () => {
+      const idToUpdate = 1;
+      const updatedSite = {
+        content: "Yay we did it!",
+        after_img:
+          "https://res.cloudinary.com/trash-tracker/image/upload/v1573180117/tilpd3mwkehtvz24hzwz.jpg",
+        clean: true
+      };
+
+      return supertest(app)
+        .patch(`/api/sites/${idToUpdate}`)
+        .send(updatedSite)
+        .expect(204);
+    });
   });
 });
