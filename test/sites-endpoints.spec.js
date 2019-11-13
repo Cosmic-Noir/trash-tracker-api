@@ -116,7 +116,9 @@ describe("GET /api/clean", function() {
         .expect(200)
         .expect(res => {
           expect(res.body[0].title).to.eql(expectedSite.title);
-          // expect(res.body[0].content).to.eql(expectedSite.content);
+          expect(res.body[0].content).to.eql(expectedSite.content);
+          expect(res.body[0].city).to.eql(expectedSite.city);
+          expect(res.body[0].addrss).to.eql(expectedSite.addrss);
         });
     });
   });
