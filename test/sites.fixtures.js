@@ -113,4 +113,8 @@ function makeMaliciousSite() {
   return { maliciousSite, expectedSite };
 }
 
-module.exports = { makeTrashSitesArray, makeCleanSitesArray };
+module.exports = {
+  makeTrashSitesArray,
+  makeCleanSitesArray,
+  makeMaliciousSite
+};

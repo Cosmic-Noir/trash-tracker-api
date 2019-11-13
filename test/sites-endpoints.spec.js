@@ -3,7 +3,8 @@ const knex = require("knex");
 const app = require("../src/app");
 const {
   makeTrashSitesArray,
-  makeCleanSitesArray
+  makeCleanSitesArray,
+  makeMaliciousSite
 } = require("./sites.fixtures");
 const { makeUsersArray, makeAuthHeader } = require("./users.fixtures");
 
@@ -93,6 +94,30 @@ describe("GET /api/clean", function() {
       return supertest(app)
         .get("/api/sites/clean")
         .expect(200, testCleanSites);
+    });
+  });
+
+  context(`Given a clean site with XSS attack`, () => {
+    const { maliciousSite, expectedSite } = makeMaliciousSite();
+    const testUsers = makeUsersArray();
+
+    beforeEach(`Insert malicious site`, () => {
+      return db
+        .into("tt_users")
+        .insert(testUsers)
+        .then(() => {
+          return db.into("tt_sites").insert(maliciousSite);
+        });
+    });
+
+    it(`Sanitizes the site data of XSS attack`, () => {
+      return supertest(app)
+        .get(`/api/sites/clean`)
+        .expect(200)
+        .expect(res => {
+          expect(res.body[0].title).to.eql(expectedSite.title);
+          // expect(res.body[0].content).to.eql(expectedSite.content);
+        });
     });
   });
 });

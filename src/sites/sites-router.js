@@ -59,7 +59,7 @@ const sterilizedSite = site => ({
 sitesRouter.route("/clean").get((req, res, next) => {
   SitesService.getCleanSites(req.app.get("db"))
     .then(sites => {
-      res.json(sites);
+      res.json(sites.map(sterilizedSite));
     })
     .catch(next);
 });
@@ -68,7 +68,7 @@ sitesRouter.route("/clean").get((req, res, next) => {
 sitesRouter.route("/trash").get((req, res, next) => {
   SitesService.getTrashSites(req.app.get("db"))
     .then(sites => {
-      res.json(sites);
+      res.json(sites.map(sterilizedSite));
     })
     .catch(next);
 });
@@ -79,7 +79,7 @@ sitesRouter
   .get((req, res, next) => {
     SitesService.getAllSites(req.app.get("db"))
       .then(sites => {
-        res.json(sites);
+        res.json(sites.map(sterilizedSite));
       })
       .catch(next);
   })
@@ -124,11 +124,6 @@ sitesRouter
           })
           .catch(next);
       };
-      // res
-      //   .status(200)
-      //   .send("Req received")
-      //   .json(newSite);
-      //
     }
   );
 
