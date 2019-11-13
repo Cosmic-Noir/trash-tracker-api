@@ -164,17 +164,18 @@ describe(`GET /api/sites/:site_id`, () => {
   });
 });
 
-describe.skip(`POST /api/sites`, () => {
+describe(`POST /api/sites`, () => {
+  const testUsers = makeUsersArray();
+
+  beforeEach("cleanup", () => {
+    db.raw("TRUNCATE tt_sites, tt_users RESTART IDENTITY CASCADE");
+  });
+  beforeEach("Insert test users", () => {
+    return db.into("tt_users").insert(testUsers);
+  });
+
   it(`Creates site, responds with 201 and new site`, function() {
     // this.retries(3);
-    const testUsers = makeUsersArray();
-
-    beforeEach("cleanup", () => {
-      db.raw("TRUNCATE tt_sites, tt_users RESTART IDENTITY CASCADE");
-    });
-    beforeEach("Insert test users", () => {
-      return db.into("tt_users").insert(testUsers);
-    });
 
     const newSite = {
       posted_by: 2,
@@ -214,7 +215,7 @@ describe.skip(`POST /api/sites`, () => {
   });
 });
 
-describe(`PATCH /api/sites/:site_id`, () => {
+describe.skip(`PATCH /api/sites/:site_id`, () => {
   context(`Given there are no matching sites`, () => {
     const siteId = 12345;
     return supertest(app)
@@ -225,10 +226,6 @@ describe(`PATCH /api/sites/:site_id`, () => {
   context(`Given there is a matching site`, () => {
     const testUsers = makeUsersArray();
     const testSites = makeTrashSitesArray();
-
-    // beforeEach("cleanup", () => {
-    //   db.raw("TRUNCATE tt_sites, tt_users RESTART IDENTITY CASCADE");
-    // });
 
     beforeEach("Insert users and sites", () => {
       return db
