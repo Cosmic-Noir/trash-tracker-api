@@ -164,7 +164,7 @@ describe(`GET /api/sites/:site_id`, () => {
   });
 });
 
-describe(`POST /api/sites`, () => {
+describe.skip(`POST /api/sites`, () => {
   it(`Creates site, responds with 201 and new site`, function() {
     // this.retries(3);
     const testUsers = makeUsersArray();
@@ -214,7 +214,7 @@ describe(`POST /api/sites`, () => {
   });
 });
 
-describe.skip(`PATCH /api/sites/:site_id`, () => {
+describe(`PATCH /api/sites/:site_id`, () => {
   context(`Given there are no matching sites`, () => {
     const siteId = 12345;
     return supertest(app)
@@ -225,6 +225,10 @@ describe.skip(`PATCH /api/sites/:site_id`, () => {
   context(`Given there is a matching site`, () => {
     const testUsers = makeUsersArray();
     const testSites = makeTrashSitesArray();
+
+    // beforeEach("cleanup", () => {
+    //   db.raw("TRUNCATE tt_sites, tt_users RESTART IDENTITY CASCADE");
+    // });
 
     beforeEach("Insert users and sites", () => {
       return db
