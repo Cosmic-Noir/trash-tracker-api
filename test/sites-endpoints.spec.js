@@ -164,7 +164,7 @@ describe(`GET /api/sites/:site_id`, () => {
   });
 });
 
-describe.skip(`POST /api/sites`, () => {
+describe(`POST /api/sites`, () => {
   it(`Creates site, responds with 201 and new site`, function() {
     // this.retries(3);
     const testUsers = makeUsersArray();
@@ -211,5 +211,14 @@ describe.skip(`POST /api/sites`, () => {
           .get(`/api/sites/${res.body.id}`)
           .expect(res.body);
       });
+  });
+});
+
+describe(`PATCH /api/sites/:site_id`, () => {
+  context(`Given there are no matching sites`, () => {
+    const siteId = 12345;
+    return supertest(app)
+      .patch(`/api/sites/${siteId}`)
+      .expect(404, { error: { message: `Site doesn't exist` } });
   });
 });
