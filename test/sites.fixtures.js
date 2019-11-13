@@ -84,4 +84,33 @@ function makeCleanSitesArray() {
   ];
 }
 
+function makeMaliciousSite() {
+  const maliciousSite = {
+    id: 911,
+    posted_by: 1,
+    date_posted: new Date().toISOString(),
+    clean: true,
+    title: 'Naughty naughty very naughty <script>alert("xss");</script>',
+    addrss: 'Naughty naughty very naughty <script>alert("xss");</script>',
+    city: 'Naughty naughty very naughty <script>alert("xss");</script>',
+    state_abr: "MN",
+    before_img:
+      "https://www.graziame.com/sites/default/files/graziame/styles/1140_630_wide_landscape/public/images/2019/03/13/dustan-woodhouse-675082-unsplash.jpg?itok=o1_XF_jm",
+    after_img:
+      "https://media.globalcitizen.org/thumbnails/e4/15/e415fee3-e28a-4d6d-9ce1-ba303d3d5dab/screen_shot_2019-03-11_at_53455_pm.png__1500x670_q85_crop_subsampling-2.png",
+    content: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`
+  };
+  const expectedSite = {
+    ...maliciousSite,
+    title:
+      'Naughty naughty very naughty &lt;script&gt;alert("xss");&lt;/script&gt;',
+    addrss:
+      'Naughty naughty very naughty &lt;script&gt;alert("xss");&lt;/script&gt;',
+    city:
+      'Naughty naughty very naughty &lt;script&gt;alert("xss");&lt;/script&gt;',
+    content: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`
+  };
+  return { maliciousSite, expectedSite };
+}
+
 module.exports = { makeTrashSitesArray, makeCleanSitesArray };
