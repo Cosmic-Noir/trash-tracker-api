@@ -96,8 +96,10 @@ describe("GET /api/clean", function() {
         .expect(200, testCleanSites);
     });
   });
+});
 
-  context(`Given a clean site with XSS attack`, () => {
+describe(`GET /api/sites`, () => {
+  context(`Given a site with XSS attack`, () => {
     const { maliciousSite, expectedSite } = makeMaliciousSite();
     const testUsers = makeUsersArray();
 
@@ -112,7 +114,7 @@ describe("GET /api/clean", function() {
 
     it(`Sanitizes the site data of XSS attack`, () => {
       return supertest(app)
-        .get(`/api/sites/clean`)
+        .get(`/api/sites`)
         .expect(200)
         .expect(res => {
           expect(res.body[0].title).to.eql(expectedSite.title);
@@ -124,6 +126,7 @@ describe("GET /api/clean", function() {
   });
 });
 
+// GET by ID
 describe(`GET /api/sites/:site_id`, () => {
   context(`Given site does not exist`, () => {
     it(`Responds with 404`, () => {
