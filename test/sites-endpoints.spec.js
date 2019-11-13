@@ -5,7 +5,7 @@ const {
   makeTrashSitesArray,
   makeCleanSitesArray
 } = require("./sites.fixtures");
-const { makeUsersArray } = require("./users.fixtures");
+const { makeUsersArray, makeAuthHeader } = require("./users.fixtures");
 
 let db;
 
@@ -159,6 +159,7 @@ describe(`POST /api/sites`, () => {
 
     return supertest(app)
       .post(`/api/sites`)
+      .set("Authorization", makeAuthHeader(testUsers[0]))
       .send(newSite)
       .expect(201)
       .expect(res => {

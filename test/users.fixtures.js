@@ -7,21 +7,21 @@ function makeUsersArray() {
       id: 1,
       username: "dude",
       email: "cool@email.com",
-      pass: "cool123",
+      pass: "$2a$12$5lZIXjUpKOe04nWlp7/0POl0Be2AGMhAnk9/oBXf7kdz57T8BgQrO",
       score: 25
     },
     {
       id: 2,
       username: "dudette",
       email: "cooler@email.com",
-      pass: "cold789"
+      pass: "$2a$12$C/Ftm/O3HQ.cQjrerANQAu06GvCdksfuxG5QoninrIktokcFZPVS."
     }
   ];
 }
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   const token = jwt.sign({ user_id: user.id }, secret, {
-    subject: user.user_name,
+    subject: user.username,
     algorithm: "HS256"
   });
   return `bearer ${token}`;
