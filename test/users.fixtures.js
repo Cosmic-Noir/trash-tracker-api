@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const config = require("../src/config");
 
 function makeUsersArray() {
   return [
@@ -19,7 +20,7 @@ function makeUsersArray() {
   ];
 }
 
-function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
+function makeAuthHeader(user, secret = config.JWT_SECRET) {
   const token = jwt.sign({ user_id: user.id }, secret, {
     subject: user.username,
     algorithm: "HS256"

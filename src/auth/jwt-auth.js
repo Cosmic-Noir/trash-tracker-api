@@ -29,7 +29,7 @@ function requireAuth(req, res, next) {
         next(err);
       });
   } catch (error) {
-    res.status(401).json({ error: "Anauthorized Request" });
+    res.status(401).json({ error: "Unauthorized Request" });
   }
 }
 
