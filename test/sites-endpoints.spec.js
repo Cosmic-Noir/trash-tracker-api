@@ -194,7 +194,6 @@ describe(`POST /api/sites`, () => {
       .expect(201)
       .expect(res => {
         expect(res.body.title).to.eql(newSite.title);
-        expect(res.body.posted_by).to.eql(newSite.posted_by);
         expect(res.body.addrss).to.eql(newSite.addrss);
         expect(res.body.city).to.eql(newSite.city);
         expect(res.body.state_abr).to.eql(newSite.state_abr);
