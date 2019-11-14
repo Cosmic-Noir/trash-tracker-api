@@ -88,7 +88,7 @@ sitesRouter
     // jsonParser,
     upload.single("before_img"),
     (req, res, next) => {
-      console.log(req.file.path);
+      console.log(typeof req);
 
       const { title, addrss, city, state_abr, content } = req.body;
       const newSite = {
@@ -98,21 +98,6 @@ sitesRouter
         state_abr,
         content
       };
-
-      cloudinary.uploader.upload(req.file.path, function(error, result) {
-        newSite.before_img = result.secure_url;
-        insertSite();
-      });
-
-      newSite.posted_by = req.user_ref;
-
-      for (const [key, value] of Object.entries(newSite)) {
-        if (value == null) {
-          return res.status(400).json({
-            error: { message: `Missing '${key}' in request body` }
-          });
-        }
-      }
 
       insertSite = () => {
         SitesService.insertSite(req.app.get("db"), newSite)
@@ -124,6 +109,26 @@ sitesRouter
           })
           .catch(next);
       };
+
+      if (typeof req.body.before_img !== "string") {
+        cloudinary.uploader.upload(req.file.path, function(error, result) {
+          newSite.before_img = result.secure_url;
+          insertSite();
+        });
+      } else {
+        newSite.before_img = req.body.before_img;
+        insertSite();
+      }
+
+      newSite.posted_by = req.user_ref;
+
+      for (const [key, value] of Object.entries(newSite)) {
+        if (value == null) {
+          return res.status(400).json({
+            error: { message: `Missing '${key}' in request body` }
+          });
+        }
+      }
     }
   );
 
