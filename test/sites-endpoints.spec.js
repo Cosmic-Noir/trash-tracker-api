@@ -178,7 +178,6 @@ describe(`POST /api/sites`, () => {
     // this.retries(3);
 
     const newSite = {
-      posted_by: 2,
       title: "Leech Lake",
       addrss: "Leech Lake Park",
       city: "Pequot",

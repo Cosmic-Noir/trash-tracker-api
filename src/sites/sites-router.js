@@ -85,7 +85,7 @@ sitesRouter
   })
   .post(
     requireAuth,
-    // jsonParser,
+    jsonParser,
     upload.single("before_img"),
     (req, res, next) => {
       console.log(typeof req);
