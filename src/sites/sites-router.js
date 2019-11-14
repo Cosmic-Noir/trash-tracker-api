@@ -104,7 +104,7 @@ sitesRouter
         content
       };
 
-      // Functio to check for other missing fields and then post new site once image file has been handled
+      // Check for other missing fields and then post new site once image file has been handled
       insertSite = () => {
         for (const [key, value] of Object.entries(newSite)) {
           if (value == null) {
