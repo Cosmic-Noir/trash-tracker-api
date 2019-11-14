@@ -150,21 +150,6 @@ sitesRouter
     const { content, clean } = req.body;
     const siteToUpdate = { content, clean };
 
-    cloudinary.uploader.upload(req.file.path, function(error, result) {
-      siteToUpdate.after_img = result.secure_url;
-      updateSite();
-    });
-
-    const numberOfValues = Object.values(siteToUpdate).filter(Boolean).length;
-
-    if (numberOfValues === 0) {
-      return res.status(400).json({
-        error: {
-          message: `Request body must contain new content and updated Image`
-        }
-      });
-    }
-
     updateSite = () => {
       SitesService.updateSite(
         req.app.get("db"),
@@ -176,6 +161,26 @@ sitesRouter
         })
         .catch(next);
     };
+
+    if (typeof req.body.after_img !== "string") {
+      cloudinary.uploader.upload(req.file.path, function(error, result) {
+        siteToUpdate.after_img = result.secure_url;
+        updateSite();
+      });
+    } else {
+      siteToUpdate.after_img = req.body.after_img;
+      updateSite();
+    }
+
+    const numberOfValues = Object.values(siteToUpdate).filter(Boolean).length;
+
+    if (numberOfValues === 0) {
+      return res.status(400).json({
+        error: {
+          message: `Request body must contain new content and updated Image`
+        }
+      });
+    }
   });
 
 // Obtain comments for site:
