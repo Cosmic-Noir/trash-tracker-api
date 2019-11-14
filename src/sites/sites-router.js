@@ -88,7 +88,12 @@ sitesRouter
     jsonParser,
     upload.single("before_img"),
     (req, res, next) => {
-      console.log(typeof req);
+      // First check if image is missing
+      if (req.body.before_img == null) {
+        return res.status(400).json({
+          error: { message: `Missing 'before_img' in request body` }
+        });
+      }
 
       const { title, addrss, city, state_abr, content } = req.body;
       const newSite = {
@@ -99,7 +104,15 @@ sitesRouter
         content
       };
 
+      // Functio to check for other missing fields and then post new site once image file has been handled
       insertSite = () => {
+        for (const [key, value] of Object.entries(newSite)) {
+          if (value == null) {
+            return res.status(400).json({
+              error: { message: `Missing '${key}' in request body` }
+            });
+          }
+        }
         SitesService.insertSite(req.app.get("db"), newSite)
           .then(site => {
             res
@@ -110,25 +123,17 @@ sitesRouter
           .catch(next);
       };
 
-      if (typeof req.body.before_img !== "string") {
+      if (typeof req.body.before_img === "string") {
+        newSite.before_img = req.body.before_img;
+        insertSite();
+      } else {
         cloudinary.uploader.upload(req.file.path, function(error, result) {
           newSite.before_img = result.secure_url;
           insertSite();
         });
-      } else {
-        newSite.before_img = req.body.before_img;
-        insertSite();
       }
 
       newSite.posted_by = req.user_ref;
-
-      for (const [key, value] of Object.entries(newSite)) {
-        if (value == null) {
-          return res.status(400).json({
-            error: { message: `Missing '${key}' in request body` }
-          });
-        }
-      }
     }
   );
 

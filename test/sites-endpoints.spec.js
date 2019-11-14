@@ -211,9 +211,43 @@ describe(`POST /api/sites`, () => {
           .expect(res.body);
       });
   });
+
+  // Test missing fields response
+  const requiredFields = [
+    "title",
+    "addrss",
+    "city",
+    "state_abr",
+    "before_img",
+    "content"
+  ];
+
+  requiredFields.forEach(field => {
+    const newSite = {
+      title: "Leech Lake",
+      addrss: "Leech Lake Park",
+      city: "Pequot",
+      state_abr: "MN",
+      before_img:
+        "https://www.pasadenastarnews.com/wp-content/uploads/2019/06/LDN-L-HOMELESS-COUNT-SGVN-0605-12-SR2.jpg?w=525",
+      content: "One, two, testing..."
+    };
+
+    it(`Responds with 400 and error when ${field} is missing`, () => {
+      delete newSite[field];
+
+      return supertest(app)
+        .post("/api/sites")
+        .set("Authorization", makeAuthHeader(testUsers[0]))
+        .send(newSite)
+        .expect(400, {
+          error: { message: `Missing '${field}' in request body` }
+        });
+    });
+  });
 });
 
-describe.skip(`PATCH /api/sites/:site_id`, () => {
+describe(`PATCH /api/sites/:site_id`, () => {
   context(`Given there are no matching sites`, () => {
     const siteId = 12345;
     return supertest(app)
@@ -245,6 +279,7 @@ describe.skip(`PATCH /api/sites/:site_id`, () => {
 
       return supertest(app)
         .patch(`/api/sites/${idToUpdate}`)
+        .set("Authorization", makeAuthHeader(testUsers[0]))
         .send(updatedSite)
         .expect(204);
     });
