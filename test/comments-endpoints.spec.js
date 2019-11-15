@@ -33,7 +33,7 @@ afterEach("Cleanup", () =>
   db.raw("TRUNCATE tt_comments, tt_sites, tt_users RESTART IDENTITY CASCADE")
 );
 
-describe.skip("GET /api/sites/${siteId}/comments", function() {
+describe("GET /api/sites/${siteId}/comments", function() {
   context(`Given there are no comments`, () => {
     const testUsers = makeUsersArray();
     const testSites = makeTrashSitesArray();
@@ -86,7 +86,7 @@ describe.skip("GET /api/sites/${siteId}/comments", function() {
   });
 });
 
-describe.skip(`POST /api/comments`, () => {
+describe(`POST /api/comments`, () => {
   const testUsers = makeUsersArray();
   const testSites = makeTrashSitesArray();
 
