@@ -58,11 +58,13 @@ describe("GET /api/sites/${siteId}/comments ", function() {
     const testUsers = makeUsersArray();
     const testSites = makeTrashSitesArray();
     const testComments = makeCommentsArray();
-    const expectedComments = testComments.filter(comment => {
-      if (comment.siteId === testSites[0].id) {
-        return comment;
-      }
-    });
+    const exptectedComment = {
+      id: 4,
+      date_posted: new Date().toISOString(),
+      username: "dude",
+      content:
+        "I think some friends are going to meet here Friday after school if anyone wants to help. 3PM"
+    };
 
     beforeEach("Insert users and sites", () => {
       return db
@@ -78,8 +80,8 @@ describe("GET /api/sites/${siteId}/comments ", function() {
 
     it(`Responds with 200 status and corresponding comments`, () => {
       return supertest(app)
-        .get(`/api/sites/${testSites[0].id}/comments`)
-        .expect(200, expectedComments);
+        .get(`/api/sites/${testSites[1].id}/comments`)
+        .expect(200, [exptectedComment]);
     });
   });
 });
