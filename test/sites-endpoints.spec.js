@@ -213,14 +213,7 @@ describe(`POST /api/sites`, () => {
   });
 
   // Test missing fields response
-  const requiredFields = [
-    "title",
-    "addrss",
-    "city",
-    "state_abr",
-    "before_img",
-    "content"
-  ];
+  const requiredFields = ["title", "addrss", "city", "state_abr", "content"];
 
   requiredFields.forEach(field => {
     const newSite = {
