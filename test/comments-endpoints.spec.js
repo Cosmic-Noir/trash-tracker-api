@@ -122,11 +122,3 @@ describe(`POST /api/comments`, () => {
       });
   });
 });
-
-const exptectedComment = {
-  id: 4,
-  date_posted: new Date().toISOString(),
-  username: "dude",
-  content:
-    "I think some friends are going to meet here Friday after school if anyone wants to help. 3PM"
-};
