@@ -53,13 +53,12 @@ describe("POST /api/login", () => {
           error: `Missing '${field}' in request body`
         });
     });
-
-    it(`Responds with 400 "Incorrect username or password" if incorrect info supplied`, () => {
-      const invalidUser = { username: "notGood", pass: "veryNotGood" };
-      return supertest(app)
-        .post(`/api/login`)
-        .send(invalidUser)
-        .expect(400, { error: "Incorrect username or password" });
-    });
+  });
+  it(`Responds with 400 "Incorrect username or password" if incorrect info supplied`, () => {
+    const invalidUser = { username: "notGood", pass: "veryNotGood" };
+    return supertest(app)
+      .post(`/api/login`)
+      .send(invalidUser)
+      .expect(400, { error: "Incorrect username or password" });
   });
 });
