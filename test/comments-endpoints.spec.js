@@ -33,7 +33,7 @@ afterEach("Cleanup", () =>
   db.raw("TRUNCATE tt_comments, tt_sites, tt_users RESTART IDENTITY CASCADE")
 );
 
-describe("GET /api/sites/${siteId}/comments ", function() {
+describe("GET /api/sites/${siteId}/comments", function() {
   context(`Given there are no comments`, () => {
     const testUsers = makeUsersArray();
     const testSites = makeTrashSitesArray();
@@ -66,7 +66,7 @@ describe("GET /api/sites/${siteId}/comments ", function() {
         "I think some friends are going to meet here Friday after school if anyone wants to help. 3PM"
     };
 
-    beforeEach("Insert users and sites", () => {
+    beforeEach(`Insert users and sites`, () => {
       return db
         .into("tt_users")
         .insert(testUsers)
@@ -84,4 +84,6 @@ describe("GET /api/sites/${siteId}/comments ", function() {
         .expect(200, [exptectedComment]);
     });
   });
+
+  context(`Given a comment with XSS attack`, () => {});
 });
