@@ -16,6 +16,12 @@ function makeUsersArray() {
       username: "dudette",
       email: "cooler@email.com",
       pass: "$2a$12$C/Ftm/O3HQ.cQjrerANQAu06GvCdksfuxG5QoninrIktokcFZPVS."
+    },
+    {
+      id: 3,
+      username: "stargirl",
+      email: "coolest123@email.com",
+      pass: "$2a$12$5lZIXjUpKOe04nWlp7/0POl0Be2AGMhAnk9/oBXf7kdz57T8BgQrO"
     }
   ];
 }

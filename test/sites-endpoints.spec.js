@@ -30,7 +30,7 @@ afterEach("Cleanup", () =>
 );
 
 // GET endpoints
-describe("GET /api/trash", function() {
+describe.skip("GET /api/trash", function() {
   context(`Given there are no trash sites`, () => {
     it("Responds with 200 status and empty list", () => {
       return supertest(app)
@@ -64,7 +64,7 @@ describe("GET /api/trash", function() {
   });
 });
 
-describe("GET /api/clean", function() {
+describe.skip("GET /api/clean", function() {
   context(`Given there are no clean sites`, () => {
     it("Responds with 200 status and empty list", () => {
       return supertest(app)
@@ -98,7 +98,7 @@ describe("GET /api/clean", function() {
   });
 });
 
-describe(`GET /api/sites`, () => {
+describe.skip(`GET /api/sites`, () => {
   context(`Given a site with XSS attack`, () => {
     const { maliciousSite, expectedSite } = makeMaliciousSite();
     const testUsers = makeUsersArray();
@@ -127,7 +127,7 @@ describe(`GET /api/sites`, () => {
 });
 
 // GET by ID
-describe(`GET /api/sites/:site_id`, () => {
+describe.skip(`GET /api/sites/:site_id`, () => {
   context(`Given site does not exist`, () => {
     it(`Responds with 404`, () => {
       const invalidId = 123454;
@@ -164,7 +164,7 @@ describe(`GET /api/sites/:site_id`, () => {
   });
 });
 
-describe(`POST /api/sites`, () => {
+describe.skip(`POST /api/sites`, () => {
   const testUsers = makeUsersArray();
 
   beforeEach("cleanup", () => {
@@ -240,7 +240,7 @@ describe(`POST /api/sites`, () => {
   });
 });
 
-describe(`PATCH /api/sites/:site_id`, () => {
+describe.skip(`PATCH /api/sites/:site_id`, () => {
   context(`Given there are no matching sites`, () => {
     const siteId = 12345;
     return supertest(app)
