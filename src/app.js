@@ -23,10 +23,9 @@ app.use(cors());
 // Return 500 for internal server errors
 app.use(function errorHandler(error, req, res, next) {
   let response;
-  if (NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production") {
     response = { error: { message: "server error" } };
   } else {
-    console.log(error);
     response = { message: error.message, error };
   }
   res.status(500).json(response);
