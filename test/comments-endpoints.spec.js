@@ -53,4 +53,33 @@ describe("GET /api/sites/${siteId}/comments ", function() {
         .expect(200, []);
     });
   });
+
+  context(`Given there are comments for an existing site`, () => {
+    const testUsers = makeUsersArray();
+    const testSites = makeTrashSitesArray();
+    const testComments = makeCommentsArray();
+    const expectedComments = testComments.filter(comment => {
+      if (comment.siteId === testSites[0].id) {
+        return comment;
+      }
+    });
+
+    beforeEach("Insert users and sites", () => {
+      return db
+        .into("tt_users")
+        .insert(testUsers)
+        .then(() => {
+          return db.into("tt_sites").insert(testSites);
+        })
+        .then(() => {
+          return db.into("tt_comments").insert(testComments);
+        });
+    });
+
+    it(`Responds with 200 status and corresponding comments`, () => {
+      return supertest(app)
+        .get(`/api/sites/${testSites[0].id}/comments`)
+        .expect(200, expectedComments);
+    });
+  });
 });
