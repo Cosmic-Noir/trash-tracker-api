@@ -46,12 +46,14 @@ function makeMaliciousComment() {
   const maliciousComment = {
     id: 911,
     date_posted: new Date().toISOString(),
-    site_id: 5,
-    user_ref: 2,
+    site_id: 2,
+    user_ref: 1,
     content: 'Naughty naughty very naughty <script>alert("xss");</script>'
   };
   const expectedComment = {
-    ...maliciousNote,
+    id: 911,
+    username: "dude",
+    date_posted: new Date().toISOString(),
     content:
       'Naughty naughty very naughty &lt;script&gt;alert("xss");&lt;/script&gt;'
   };
