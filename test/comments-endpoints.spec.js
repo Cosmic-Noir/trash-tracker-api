@@ -90,14 +90,6 @@ describe(`POST /api/comments`, () => {
   const testUsers = makeUsersArray();
   const testSites = makeTrashSitesArray();
 
-  const exptectedComment = {
-    id: 4,
-    date_posted: new Date().toISOString(),
-    username: "dude",
-    content:
-      "I think some friends are going to meet here Friday after school if anyone wants to help. 3PM"
-  };
-
   beforeEach(`Insert users and sites`, () => {
     return db
       .into("tt_users")
@@ -117,7 +109,24 @@ describe(`POST /api/comments`, () => {
     return supertest(app)
       .post(`/api/comments`)
       .set("Authorization", makeAuthHeader(testUsers[0]))
+      .set("Content-Type", "application/json")
       .send(newComment)
-      .expect(201);
+      .expect(201)
+      .expect(res => {
+        console.log(res.body);
+        expect(res.body[0].content).to.eql(newComment.content);
+        expect(res.body[0].site_id).to.eql(newComment.site_id);
+        expect(res.body[0].user_ref).to.eql(testUsers[0].id);
+        expect(res.body[0]).to.have.property("id");
+        expect(res.headers.location).to.eql(`/api/comments/${res.body.id}`);
+      });
   });
 });
+
+const exptectedComment = {
+  id: 4,
+  date_posted: new Date().toISOString(),
+  username: "dude",
+  content:
+    "I think some friends are going to meet here Friday after school if anyone wants to help. 3PM"
+};
