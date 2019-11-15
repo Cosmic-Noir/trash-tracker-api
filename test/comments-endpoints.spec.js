@@ -84,6 +84,40 @@ describe("GET /api/sites/${siteId}/comments", function() {
         .expect(200, [exptectedComment]);
     });
   });
+});
 
-  context(`Given a comment with XSS attack`, () => {});
+describe(`POST /api/comments`, () => {
+  const testUsers = makeUsersArray();
+  const testSites = makeTrashSitesArray();
+
+  const exptectedComment = {
+    id: 4,
+    date_posted: new Date().toISOString(),
+    username: "dude",
+    content:
+      "I think some friends are going to meet here Friday after school if anyone wants to help. 3PM"
+  };
+
+  beforeEach(`Insert users and sites`, () => {
+    return db
+      .into("tt_users")
+      .insert(testUsers)
+      .then(() => {
+        return db.into("tt_sites").insert(testSites);
+      });
+  });
+
+  it(`Creates comment, responds with 201 and new comment`, () => {
+    const newComment = {
+      site_id: 2,
+      content:
+        "I think some friends are going to meet here Friday after school if anyone wants to help. 3PM"
+    };
+
+    return supertest(app)
+      .post(`/api/comments`)
+      .set("Authorization", makeAuthHeader(testUsers[0]))
+      .send(newComment)
+      .expect(201);
+  });
 });
