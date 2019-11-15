@@ -33,4 +33,24 @@ afterEach("Cleanup", () =>
   db.raw("TRUNCATE tt_comments, tt_sites, tt_users RESTART IDENTITY CASCADE")
 );
 
-describe("Comments Endpoints", function() {});
+describe("GET /api/sites/${siteId}/comments ", function() {
+  context(`Given there are no comments`, () => {
+    const testUsers = makeUsersArray();
+    const testSites = makeTrashSitesArray();
+
+    beforeEach("Insert users and sites", () => {
+      return db
+        .into("tt_users")
+        .insert(testUsers)
+        .then(() => {
+          return db.into("tt_sites").insert(testSites);
+        });
+    });
+
+    it(`Responds with 200 status and empty list`, () => {
+      return supertest(app)
+        .get(`/api/sites/${testSites[0].id}/comments`)
+        .expect(200, []);
+    });
+  });
+});
