@@ -113,7 +113,6 @@ describe(`POST /api/comments`, () => {
       .send(newComment)
       .expect(201)
       .expect(res => {
-        console.log(res.body);
         expect(res.body[0].content).to.eql(newComment.content);
         expect(res.body[0].site_id).to.eql(newComment.site_id);
         expect(res.body[0].user_ref).to.eql(testUsers[0].id);
