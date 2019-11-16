@@ -52,7 +52,8 @@ const sterilizedSite = site => ({
   before_img: site.before_img,
   after_img: site.after_img,
   content: xss(site.content),
-  clean: site.clean
+  clean: site.clean,
+  username: site.username
 });
 
 // Obtain only clean sites from db:
