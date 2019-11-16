@@ -25,9 +25,10 @@ const SitesService = {
   },
   getById(knex, id) {
     return knex
-      .from("tt_sites")
       .select("*")
-      .where("id", id)
+      .from("tt_sites")
+      .innerJoin("tt_users", "tt_sites.posted_by", "=", "tt_users.id")
+      .where("tt_sites.id", id)
       .first();
   },
   getCommentsForSite(knex, site_id) {
