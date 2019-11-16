@@ -27,7 +27,6 @@ const SitesService = {
     return knex
       .select("*")
       .from("tt_sites")
-      .innerJoin("tt_users", "tt_sites.posted_by", "=", "tt_users.id")
       .where("tt_sites.id", id)
       .first();
   },
