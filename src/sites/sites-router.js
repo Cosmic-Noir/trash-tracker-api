@@ -214,6 +214,14 @@ async function checkSiteExists(req, res, next) {
       });
 
     res.site = site;
+
+    const username = await SitesService.getUsername(
+      req.app.get("db"),
+      site.posted_by
+    );
+    res.site.username = username[0].username;
+    console.log(res.site);
+
     next();
   } catch (error) {
     next(error);

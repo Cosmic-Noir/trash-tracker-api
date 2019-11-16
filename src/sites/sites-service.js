@@ -30,6 +30,12 @@ const SitesService = {
       .where("tt_sites.id", id)
       .first();
   },
+  getUsername(knex, user_ref) {
+    return knex
+      .select(["tt_users.username"])
+      .from("tt_users")
+      .where("id", user_ref);
+  },
   getCommentsForSite(knex, site_id) {
     return knex
       .select([
