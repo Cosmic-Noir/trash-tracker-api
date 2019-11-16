@@ -221,7 +221,6 @@ async function checkSiteExists(req, res, next) {
       site.posted_by
     );
     res.site.username = username[0].username;
-    console.log(res.site);
 
     next();
   } catch (error) {
