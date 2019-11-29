@@ -15,7 +15,7 @@ let db;
 before("Make knex instance", () => {
   db = knex({
     client: "pg",
-    connection: process.env.TEST_DB_URL
+    connection: process.env.TEST_DATABASE_URL
   });
   app.set("db", db);
 });
@@ -157,6 +157,7 @@ describe(`GET /api/sites/:site_id`, () => {
     it(`Responds with 200 and returns the specified site`, () => {
       const siteId = 2;
       const expectedSite = testTrashSites[siteId - 1];
+      expectedSite.username = "dudette";
       return supertest(app)
         .get(`/api/sites/${siteId}`)
         .expect(200, expectedSite);
