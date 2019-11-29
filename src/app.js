@@ -1,21 +1,23 @@
 require("dotenv").config();
 const express = require("express");
-const morgan = require("morgan");
+const { NODE_ENV } = require("./config");
+
+/* Middleware */
 const cors = require("cors");
 const helmet = require("helmet");
-const { NODE_ENV } = require("./config");
-const usersRouter = require("./users/users-router");
-const authRouter = require("./auth/auth-router");
+const morgan = require("morgan");
 
-// Routes
-const sitesRouter = require("./sites/sites-router");
+/* Routers */
+const authRouter = require("./auth/auth-router");
 const commentsRouter = require("./comments/comments-router");
+const sitesRouter = require("./sites/sites-router");
+const usersRouter = require("./users/users-router");
 
 const app = express();
 
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
-// Middleware
+/* Middleware use methods before Routers */
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
@@ -31,7 +33,7 @@ app.use(function errorHandler(error, req, res, next) {
   res.status(500).json(response);
 });
 
-// Endpoints
+// Test Endpoint
 app.get("/", (req, res) => {
   res.send("Hello, boilerplate!");
 });
