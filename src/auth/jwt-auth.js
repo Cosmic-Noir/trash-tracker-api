@@ -1,5 +1,6 @@
 const AuthService = require("./auth-service.js");
 
+// Responsible for validating JWT
 function requireAuth(req, res, next) {
   const authToken = req.get("Authorization") || "";
 
