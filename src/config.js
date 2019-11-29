@@ -7,5 +7,5 @@ module.exports = {
   TEST_DATABASE_URL:
     process.env.TEST_DATABASE_URL ||
     "postgresql://dunder_mifflin@localhost/trash_tracker-test",
-  JWT_SECRET: process.env.JWT_SECRET || "my_super_secret"
+  JWT_SECRET: process.env.JWT_SECRET
 };
