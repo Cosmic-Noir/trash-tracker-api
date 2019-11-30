@@ -27,7 +27,7 @@ Authorization: "Bearer {JSON-Web-Token}"
 
 ## Endpoints and Methods
 
-### sites/ Endpoint
+### /sites Endpoint
 
 ```
 GET /sites
@@ -53,7 +53,7 @@ POST /sites
 
 Post a new Trash Site to the database.
 
-### sites/:site_id/ Endpoint
+### /sites/:site_id Endpoint
 
 ```
 GET /sites/:site_id
@@ -67,7 +67,7 @@ PATCH /sites/:site_id
 
 Patch a Trash Site to update into a Cleaned Site.
 
-### sites/:site_id/comments/ Endpoint
+### /sites/:site_id/comments Endpoint
 
 ```
 GET /sites/:site_id/comments
@@ -75,7 +75,7 @@ GET /sites/:site_id/comments
 
 Get all comments associated with specified site.
 
-### users/ Endpoint
+### /users Endpoint
 
 ```
 POST /users
@@ -83,7 +83,7 @@ POST /users
 
 Post new user information to database
 
-### login/ Endpoint
+### /login Endpoint
 
 ```
 POST /login
@@ -91,7 +91,7 @@ POST /login
 
 Post submitted user login information, validates against database, returns JSON Web Token if validated.
 
-### comments/ Endpoint
+### /comments Endpoint
 
 ```
 POST /comments
