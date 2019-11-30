@@ -101,9 +101,20 @@ Post a comment to the database.
 
 ## Parameters
 
-### Request Body Parameters
+### Request Body Parameters and Examples
 
-POST /sites - Example Request Body:
+POST /sites -
+
+| Parameter |  Type  |
+| :-------: | :----: |
+|   title   | string |
+|  addrss   | string |
+|   city    | string |
+| state_abr | string |
+|  content  | string |
+|   file    |  file  |
+
+Example Request Body:
 
 ```
 body:
