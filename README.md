@@ -203,10 +203,74 @@ body:
      size: 254252 } }
 ```
 
-## Request Example
-
 ## Response Example and Schema
 
+### GET /sites/trash
+
+Ex Request: <em>https://fathomless-sierra-82385.herokuapp.com/api/trash</em>
+
+Response:
+
+```
+[
+    {
+        "id": 4,
+        "posted_by": 2,
+        "date_posted": "2019-10-28T04:09:27.858Z",
+        "title": "Leech Lake",
+        "addrss": "Leech Lake Park",
+        "city": "Brainerd",
+        "state_abr": "MN",
+        "before_img": "https://www.pasadenastarnews.com/wp-content/uploads/2019/06/LDN-L-HOMELESS-COUNT-SGVN-0605-12-SR2.jpg?w=525",
+        "after_img": "",
+        "content": "So sad to see this beech absolutely trashed by parties and picknickers. Would be wonderful to bring my kids here again if we cleaned it up, but I could really use some help, along with a truck to haul away the refuse.",
+        "clean": false
+    },
+    {
+        "id": 13,
+        "posted_by": 7,
+        "date_posted": "2019-11-06T09:58:35.976Z",
+        "title": "Littered Swamp",
+        "addrss": "456 Heath Road",
+        "city": "Little Tampa",
+        "state_abr": "FL",
+        "before_img": "https://cdn.cnn.com/cnnnext/dam/assets/160706124115-hong-kong-trash-03-super-169.jpg",
+        "after_img": null,
+        "content": "Swamp used to be used for partying, now the animals are chocking on plastic. Thinking of cleaning this up this weekend if anyone can help!",
+        "clean": false
+    }
+]
 ```
 
+### GET /sites/:site_id
+
+Ex Request: <em>https://fathomless-sierra-82385.herokuapp.com/api/sites/3</em>
+
+Response:
+
+```
+{
+    "id": 3,
+    "posted_by": 1,
+    "date_posted": "2019-10-28T04:09:27.858Z",
+    "title": "Ditch Off Highway 25",
+    "addrss": "Highway 25 & Madison Exit",
+    "city": "Fort Collins",
+    "state_abr": "CO",
+    "before_img": "http://nykography.weebly.com/uploads/1/1/0/4/11041387/9292659_orig.jpg",
+    "after_img": "https://res.cloudinary.com/trash-tracker/image/upload/v1574789019/n3dn4hgoguiaretgdljm.jpg",
+    "content": "Yay we did it! ",
+    "clean": true,
+    "username": "starman"
+}
+```
+
+### POST /login
+
+Ex Request: <em>https://fathomless-sierra-82385.herokuapp.com/api/login</em>
+
+Response:
+
+```
+{authToken: {server-generated-JWT}}
 ```

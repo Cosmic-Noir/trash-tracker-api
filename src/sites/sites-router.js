@@ -156,7 +156,6 @@ sitesRouter
     const { content, clean } = req.body;
     const siteToUpdate = { content, clean };
 
-    console.log(req);
     updateSite = () => {
       SitesService.updateSite(
         req.app.get("db"),
