@@ -5,6 +5,7 @@ const AuthService = require("./auth-service");
 
 authRouter.post("/", jsonParser, (req, res, next) => {
   const { username, pass } = req.body;
+
   const loginUser = { username, pass };
 
   // Check missing username or pass in req

@@ -134,9 +134,34 @@ body:
      size: 729676 } }
 ```
 
-POST /login
+POST /users - Request sent as JSON with the following parameters
 
-POST /users
+| Parameter |  Type  |
+| :-------: | :----: |
+| username  | string |
+|   pass    | string |
+|   email   | string |
+
+Example Request Body:
+
+```
+{ username: 'newUser',
+  email: 'someemail@gmail.com',
+  pass: 'Pass123!' }
+```
+
+POST /login - Request sent as JSON with the following parameters.
+
+| Parameter |  Type  |
+| :-------: | :----: |
+| username  | string |
+|   pass    | string |
+
+Example Request Body:
+
+```
+{ pass: 'somePass12!', username: 'someUser12' }
+```
 
 POST /comments
 
