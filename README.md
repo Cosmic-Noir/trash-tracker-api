@@ -103,7 +103,34 @@ Post a comment to the database.
 
 ### Request Body Parameters
 
-POST /sites
+POST /sites - Example Request Body:
+
+```
+body:
+   [Object: null prototype] {
+     title: 'TESTING TESTINGS',
+     addrss: '123 Fake St',
+     city: 'Seattle',
+     state_abr: 'WA',
+     content: 'Testing' },
+  file:
+   { fieldname: 'before_img',
+     originalname: 'trash1.jpg',
+     encoding: '7bit',
+     mimetype: 'image/jpeg',
+     destination: '/tmp',
+     filename: '2019-11-30T20:23:38.103Ztrash1.jpg',
+     path: '/tmp/2019-11-30T20:23:38.103Ztrash1.jpg',
+     size: 729676 } }
+```
+
+POST /login
+
+POST /users
+
+POST /comments
+
+PATCH /sites/:site_id
 
 ## Request Example
 

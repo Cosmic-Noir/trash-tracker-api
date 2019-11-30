@@ -90,6 +90,7 @@ sitesRouter
     upload.single("before_img"),
     (req, res, next) => {
       // First check if image is missing
+      console.log(req);
       if (req.body.before_img === null) {
         return res.status(400).json({
           error: { message: `Missing 'before_img' in request body` }
