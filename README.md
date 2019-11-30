@@ -103,7 +103,7 @@ Post a comment to the database.
 
 ### Request Body Parameters and Examples
 
-POST /sites -
+POST /sites - Request sent as Form-data with below parameters and values appended.
 
 | Parameter |  Type  |
 | :-------: | :----: |
@@ -112,7 +112,6 @@ POST /sites -
 |   city    | string |
 | state_abr | string |
 |  content  | string |
-|   file    |  file  |
 
 Example Request Body:
 
