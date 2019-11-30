@@ -163,7 +163,22 @@ Example Request Body:
 { pass: 'somePass12!', username: 'someUser12' }
 ```
 
-POST /comments
+POST /comments - Request sent as JSON with the following parameters.
+
+| Parameter |  Type   |
+| :-------: | :-----: |
+|  site_id  | integer |
+|  content  | string  |
+| user_ref  | integer |
+
+Example Request Body:
+
+```
+{ site_id: 13,
+  content:
+   'Woa, I\'d love to help since this hasn\'t been cleaned yet! Let me know if you\'re all still interested. ',
+  user_ref: 12 }
+```
 
 PATCH /sites/:site_id
 
