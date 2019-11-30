@@ -180,8 +180,33 @@ Example Request Body:
   user_ref: 12 }
 ```
 
-PATCH /sites/:site_id
+PATCH /sites/:site_id - Request sent as Form-data with below parameters and values appended.
+
+Example Request Body:
+
+| Parameter |  Type   |
+| :-------: | :-----: |
+|  content  | string  |
+|   clean   | boolean |
+
+```
+body:
+   [Object: null prototype] { content: 'dfhdfh', clean: 'true' },
+  file:
+   { fieldname: 'after_img',
+     originalname: 'clean1.jpg',
+     encoding: '7bit',
+     mimetype: 'image/jpeg',
+     destination: '/tmp',
+     filename: '2019-11-30T20:55:13.560Zclean1.jpg',
+     path: '/tmp/2019-11-30T20:55:13.560Zclean1.jpg',
+     size: 254252 } }
+```
 
 ## Request Example
 
 ## Response Example and Schema
+
+```
+
+```
