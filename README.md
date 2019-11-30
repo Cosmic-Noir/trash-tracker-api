@@ -2,8 +2,7 @@
 
 This is the API for Trash#Tracker's client-side React app.
 
-[Live Client](https://trash-tag-tracker-app.cosmicnoir.now.sh/)
-[Client Repo](https://github.com/Cosmic-Noir/trash-tag-tracker-app)
+-[Live Client](https://trash-tag-tracker-app.cosmicnoir.now.sh/) -[Client Repo](https://github.com/Cosmic-Noir/trash-tag-tracker-app)
 
 ## Resource Description
 
